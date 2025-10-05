@@ -27,11 +27,9 @@
                 <div class="card-body">
                     <h5 class="card-title"><%#Eval("Nombre") %></h5>
                     <p class="card-text"><%#Eval("Descripcion") %></p>
-                    <a href="Page3.aspx">Siguiente</a>
-                    <%-- 
-                    <asp:button text="Siguiente" CssClass="btn btn-primary" ID="btnSiguiente" runat="server"   CommandArgument='<%# Eval("IdArticulo")%>' commandName="ArticuloId"  OnClick="btnSiguiente_Click" />
-                        --%> 
-
+                    
+                    <asp:button Text="Siguiente" ID="btnSiguiente" CssClass="btn btn-primary" OnClick="btnSiguiente_Click" runat="server"   CommandArgument='<%# Eval("Id")%>' commandName="IdArticulo"/>
+                    
                 </div>
             </div>
         </div>

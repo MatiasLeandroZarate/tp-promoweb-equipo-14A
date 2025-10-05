@@ -8,54 +8,48 @@
 
 
         <div class="container">
+            <hr />
             <div class="col-md-2">
-                <label for="validationCumtom01" class="form-label">DNI </label>
-                <input type="number" class="form-control" id="validationCustom" value="" required="">
-                <div class="valid-feedback">Ok!</div>
+                <label for="txtDNI" class="form-label">DNI </label>
+                <asp:TextBox runat="server" id="txtDNI" TextMode="Number" CssClass="form-control" required=""/>
+               
             </div>
 
             <div class="col-md-3">
-                <label for="validationCustom02" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="validationCustom01" value="Mark" required="">
-                <div class="valid-feedback">
-                    Ok!
-                </div>
+                <label for="txtNombre" class="form-label">Nombre</label>
+                <asp:TextBox runat="server" id="txtNombre" CssClass="form-control" required="" />
+                
             </div>
             <div class="col-md-3">
-                <label for="validationCustom03" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="validationCustom02" value="Otto" required="">
-                <div class="valid-feedback">
-                    Ok!
-                </div>
+                <label for="txtApellido" class="form-label">Apellido</label>
+                <asp:TextBox runat="server" CssClass="form-control" id="txtApellido" required=""/>
+                
             </div>
             <div class="col-md-3">
-                <label for="validationCustomUsername" class="form-label">Email</label>
+                <label for="txtEmail" class="form-label">Email</label>
                 <div class="input-group has-validation">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
-                    <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required="">
-                    <div class="invalid-feedback">
-                        Por favor, ingresar el Email.
-                    </div>
+                    <asp:TextBox runat="server" CssClass="form-control" id="txtEmail" required=""/>
+                    
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="validationCustom03" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="validationCustom03" required="">
-                <div class="invalid-feedback">
-                    Por favor, ingresar la Dirección.
-                </div>
+                <label for="txtDireccion" class="form-label">Dirección</label>
+              <asp:TextBox runat="server" CssClass="form-control" id="txtDireccion" required=""/>
             </div>
+
             <div class="col-md-3">
-                <label for="validationCustom04" class="form-label">Ciudad</label>
-                <input type="text" class="form-control" id="validationCustom04" required="">
+                <label for="txtCiudad" class="form-label">Ciudad</label>
+              <asp:TextBox runat="server" CssClass="form-control" id="txtCiudad" required=""/>
 
                 <div class="invalid-feedback">
                     Por favor, ingresar la Ciudad.
                 </div>
             </div>
             <div class="col-md-3">
-                <label for="validationCustom05" class="form-label">CP</label>
-                <input type="text" class="form-control" id="validationCustom05" required="">
+                <label for="txtCP" class="form-label">CP</label>
+              <asp:TextBox runat="server" CssClass="form-control" id="txtCP" TextMode="Number" required=""/>
+
                 <div class="invalid-feedback">
                     Por davor, ingresar el Código Postal
                 </div>
