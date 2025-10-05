@@ -10,24 +10,36 @@
 
     <h1>LISTADO DE PROMOCIONES!</h1>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-    
-    <%
-        foreach (Dominio.Articulos item in ListaArticulo)
-        {
-    %>
+        <asp:Repeater runat="server" ID="Repetidor">
+            <ItemTemplate>
+
+     
         <div class="col">
             <div class="card">
-                <img src="<%: item.ImagenUrl %>" class="card-img-top" alt="...">
+                <%if("ImagenUrl" == null || "ImagenUrl" == "")
+                    { %>
+                        <img src="https://efectocolibri.com/wp-content/uploads/2021/01/placeholder.png" class="card-img-top" alt="...">
+                    <% }
+                    else
+                    { %>
+                        <img src="<%#Eval("ImagenUrl") %>" class="card-img-top" alt="...">
+                    <% } %>
                 <div class="card-body">
-                    <h5 class="card-title"><%: item.Nombre %></h5>
-                    <p class="card-text"><%: item.Descripcion %></p>
+                    <h5 class="card-title"><%#Eval("Nombre") %></h5>
+                    <p class="card-text"><%#Eval("Descripcion") %></p>
+                    <a href="Page3.aspx">Siguiente</a>
+                    <%-- 
+                    <asp:button text="Siguiente" CssClass="btn btn-primary" ID="btnSiguiente" runat="server"   CommandArgument='<%# Eval("IdArticulo")%>' commandName="ArticuloId"  OnClick="btnSiguiente_Click" />
+                        --%> 
 
                 </div>
             </div>
         </div>
-        <%      } %>
-    </div>
 
+            </ItemTemplate>
+        </asp:Repeater>
+       
+        </div>
 </asp:Content>
 
 <%--  FALTA ARMAR EL CAROUSEL 
@@ -52,17 +64,4 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-    
-    
-    
-            private void cargarImagen(string imagen)
-        {
-            try
-            {
-                pbxImagen.Load(imagen);
-            }
-            catch (Exception)
-            {
-                pbxImagen.Load("https://efectocolibri.com/wp-content/uploads/2021/01/placeholder.png");
-            }
-        }--%>
+    --%>

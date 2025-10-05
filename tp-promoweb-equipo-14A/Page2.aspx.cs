@@ -16,7 +16,15 @@ namespace tp_promoweb_equipo_14A
         {
             ArticulosNegocio negocio = new ArticulosNegocio();
             ListaArticulo = negocio.ListarART();
+            Repetidor.DataSource = ListaArticulo;
+            Repetidor.DataBind();
+
             //cargarImagen(ListaArticulo["Imagen].UrlImagen);
+        }
+        protected void btnbtnSiguiente_Click(object sender, EventArgs e)
+        {
+            string valor = ((Button)sender).CommandArgument;
+            Response.Redirect("Page3.aspx");
         }
     }
 }

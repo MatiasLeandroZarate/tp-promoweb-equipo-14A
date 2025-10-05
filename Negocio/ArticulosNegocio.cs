@@ -18,7 +18,7 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                datos.setearStoreProcedure("storeListarIMA");
+                datos.setearStoreProcedure("storeListarART");
 
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
@@ -26,14 +26,14 @@ namespace Negocio
                     Articulos aux = new Articulos();
                     
                     aux.Id = (int)datos.Lector["Id"];
-                    //aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
                     aux.ImagenUrl = (string)datos.Lector["ImagenUrl"];
-                    //aux.idmarca.DescripcionMarcas = (string)datos.Lector["Marca"];
-                    //aux.idcategoria.DescripcionCategoria = (string)datos.Lector["Categoria"];
+                    aux.idmarca.DescripcionMarcas = (string)datos.Lector["Marca"];
+                    aux.idcategoria.DescripcionCategoria = (string)datos.Lector["Categoria"];
 
-                    //aux.Precio = (decimal)datos.Lector["Precio"];
+                    aux.Precio = (decimal)datos.Lector["Precio"];
 
                     
 
