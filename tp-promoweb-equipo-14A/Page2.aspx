@@ -9,7 +9,9 @@
 
 
     <h1>LISTADO DE PROMOCIONES!</h1>
+    <asp:button Text="Atras" ID="btnAtras" CssClass="btn btn-primary" OnClick="btnAtras_Click" runat="server"/>
     <div class="row row-cols-1 row-cols-md-3 g-4">
+
         <asp:Repeater runat="server" ID="Repetidor">
             <ItemTemplate>
 

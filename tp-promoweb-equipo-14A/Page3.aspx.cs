@@ -42,5 +42,10 @@ namespace tp_promoweb_equipo_14A
                 throw;
             }
         }
+
+        protected void btnAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Page2.aspx");
+        }
     }
 }

@@ -29,5 +29,10 @@ namespace tp_promoweb_equipo_14A
             string valor = ((Button)sender).CommandArgument;
             Response.Redirect("Page3.aspx");
         }
+
+        protected void btnAtras_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Page1.aspx");
+        }
     }
 }
