@@ -76,7 +76,7 @@ namespace tp_promoweb_equipo_14A
             }
             string OK = "Cliente Ingresado";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{OK}');", true);
-            agregarVou();
+            //agregarVou();
         }
 
         protected void btnAtras_Click(object sender, EventArgs e)
@@ -117,45 +117,45 @@ namespace tp_promoweb_equipo_14A
 
 
         }
-        public void agregarVou()
-        {
-            AccesoBD datos = new AccesoBD();
-            DateTime fechaActual;
-            int IdCliente, IdArticulo;
-            string dni = (string)txtDNI.Text;
+        //public void agregarVou()
+        //{
+        //    AccesoBD datos = new AccesoBD();
+        //    DateTime fechaActual;
+        //    int IdCliente, IdArticulo;
+        //    string dni = (string)txtDNI.Text;
 
-                string codigovoucher = Session["CodigoVoucher"].ToString();
-                fechaActual = DateTime.Now;
-                IdArticulo = (int)Session["IdArticulo"];
-                    //Falta Corregir la toma de IdARTICULO.
-            try
-            {
+        //        string codigovoucher = Session["CodigoVoucher"].ToString();
+        //        fechaActual = DateTime.Now;
+        //        IdArticulo = (int)Session["IdArticulo"];
+        //            //Falta Corregir la toma de IdARTICULO.
+        //    try
+        //    {
 
-                datos.setearQuery("SELECT id from Clientes where Documento = @Documento");
-                datos.setearParametro("@Documento", dni);
-                if (datos.Lector.Read())
-                {
-                    IdCliente = (int)datos.Lector["id"];
-                }
+        //        datos.setearQuery("SELECT id from Clientes where Documento = @Documento");
+        //        datos.setearParametro("@Documento", dni);
+        //        if (datos.Lector.Read())
+        //        {
+        //            IdCliente = (int)datos.Lector["id"];
+        //        }
 
-                datos.setearStoreProcedure("storeAltaVoucher");
-                datos.setearParametro("@CodigoVoucher", codigovoucher);
-                datos.setearParametro("@FechaCanje", fechaActual);
-                datos.setearParametro("@IdArticulo", IdArticulo);
+        //        datos.setearStoreProcedure("storeAltaVoucher");
+        //        datos.setearParametro("@CodigoVoucher", codigovoucher);
+        //        datos.setearParametro("@FechaCanje", fechaActual);
+        //        datos.setearParametro("@IdArticulo", IdArticulo);
                 
-                datos.ejecutarAccion();
+        //        datos.ejecutarAccion();
 
 
-            }
-            catch (Exception ex)
-            {
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw ex;
-            }
-            finally
-            { datos.cerrarConexion(); }
+        //        throw ex;
+        //    }
+        //    finally
+        //    { datos.cerrarConexion(); }
 
-        }
+        //}
     }
 
 
