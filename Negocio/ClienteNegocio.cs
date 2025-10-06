@@ -43,44 +43,7 @@ namespace Negocio
 
         }
 
-        public Cliente ObtenerPorDNI(string dni)
-        {
-            AccesoBD datos = new AccesoBD();
-            try
-            {
-                datos.setearQuery("SELECT Id, DNI, Nombre, Apellido, Email, Direccion, Ciudad, CP FROM Clientes WHERE DNI = @DNI");
-                datos.setearParametro("@DNI", dni);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
-                {
-                    Cliente cliente = new Cliente()
-                    {
-                        Id = (int)datos.Lector["Id"],
-                        DNI = datos.Lector["DNI"].ToString(),
-                        Nombre = datos.Lector["Nombre"].ToString(),
-                        Apellido = datos.Lector["Apellido"].ToString(),
-                        Email = datos.Lector["Email"].ToString(),
-                        Direccion = datos.Lector["Direccion"].ToString(),
-                        Ciudad = datos.Lector["Ciudad"].ToString(),
-                        CP = (string)datos.Lector["CP"]
-                    };
-                    return cliente;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
+       
 
     }
 }

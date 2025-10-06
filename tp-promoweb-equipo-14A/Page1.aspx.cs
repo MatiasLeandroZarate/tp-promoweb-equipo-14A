@@ -10,19 +10,25 @@ using System.Web.UI.WebControls;
 namespace tp_promoweb_equipo_14A
 {
     public partial class Page11 : System.Web.UI.Page
-    {
+    {   public string codigo {  get; set; }
+        public DateTime fechaActual {  get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            codigo = Request.QueryString["CodigoVoucher"] != null ? Request.QueryString["CodigoVoucher"].ToString() : "Ingrese Código.";
         }
 
         protected void btnSiguiente_Click(object sender, EventArgs e)
         {
-            string Codigo = txtCodigo.Text.ToUpper();
-            bool codigoExiste = CompararCodigo(Codigo);
+             codigo = txtCodigo.Text.ToUpper();
+            bool codigoExiste = CompararCodigo(codigo);
             if (codigoExiste == true)
             {
-                Response.Redirect("Page2.aspx");
+                
+
+                Session.Add("CodigoVoucher", codigo);
+               
+                Response.Redirect("Page2.aspx",false);
+                
             }
             else
             {
@@ -45,12 +51,12 @@ namespace tp_promoweb_equipo_14A
                 acceso.ejecutarLectura();
                 if (acceso.Lector.Read())
                 {
-                    // El código ya existe en la base de datos
+                    
                     return true;
                 }
                 else
                 {
-                    // El código no existe en la base de datos
+                    
                     return false;
                 }
             }

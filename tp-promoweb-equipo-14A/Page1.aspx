@@ -4,8 +4,6 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h2>Page 1</h2>
-
 
     <div class="row">
         <div class=" col-3"></div>
@@ -14,8 +12,10 @@
             <div class="mb-3">
                 <label for="txtCodigo" class="form-label">Ingrese el Codigo!!!</label>
 
-                <asp:TextBox  ID="txtCodigo" CssClass="form-control" runat="server" />
+                <asp:TextBox  ID="txtCodigo" CssClass="form-control" runat="server" MaxLength="15" />
 
+               <hr />
+                <br />
                 <asp:Button Text="Siguiente" ID="btnSiguiente" CssClass="btn btn-primary" OnClick="btnSiguiente_Click" runat="server" />
 
             </div>

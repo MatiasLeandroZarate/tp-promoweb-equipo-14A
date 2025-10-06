@@ -4,14 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div>
+    <div class="container">
         <h1>TP 4 - Promo Web - Equipo 14A</h1>
         <h2>HOME - PAGINA PRINCIPAL - DEFAULT</h2>
-        <a href="Page1.aspx">Ir a Pagina 1</a>
-        <a href="Page2.aspx">Ir a Pagina 2</a>
-        <a href="Page3.aspx">Ir a Pagina 3</a>
+        <a href="Page1.aspx">Ir a ingresar el Codigo</a>
 
     </div>
+
 
 
 

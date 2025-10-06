@@ -17,7 +17,7 @@
         <div>
             <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Navbar</a>
+                    <a class="navbar-brand" href="#">Promo Web! - Equipo 14A</a>
                 </div>
             </nav>
         </div>
@@ -26,9 +26,10 @@
         <div class="container">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
+        <hr />
+        <footer>MZ- 2025 - Rompete esa Promo! </footer>
         </div>
         <hr />
-        <footer>algo en el footer! </footer>
     </form>
 </body>
 </html>
