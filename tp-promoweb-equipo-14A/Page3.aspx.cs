@@ -16,12 +16,15 @@ namespace tp_promoweb_equipo_14A
     public partial class Page3 : System.Web.UI.Page
     {
         string dnicliente;
+        bool Existe = false;
         protected void Page_Load(object sender, EventArgs e)
         {
+        }
 
-            dnicliente = (string)txtDNI.Text.ToString();
+        protected void txtDNI_TextChanged(object sender, EventArgs e)
+        {
+            dnicliente = txtDNI.Text;
             Clienteencontrado(dnicliente);
-
         }
 
         protected void btnEnviar_Click(object sender, EventArgs e)
@@ -31,26 +34,26 @@ namespace tp_promoweb_equipo_14A
             VoucherNegocio voucher = new VoucherNegocio();
             try
             {
-                
-
                 if (txtDNI.Text != "" && txtNombre.Text != "" && txtApellido.Text != "" && txtEmail.Text != "" && txtDireccion.Text != "" && txtCiudad.Text != "" && txtCP.Text != "")
                 {
                     if (chkTerminos.Checked == true)
                     {
-                        nuevo.DNI = (string)txtDNI.Text;
-                        nuevo.Nombre = (string)txtNombre.Text;
-                        nuevo.Apellido = (string)txtApellido.Text;
-                        nuevo.Email = (string)txtEmail.Text;
-                        nuevo.Direccion = (string)txtDireccion.Text;
-                        nuevo.Ciudad = (string)txtCiudad.Text;
-                        nuevo.CP = (string)txtCP.Text;
+                        bool ClienteExiste = Clienteencontrado(txtDNI.Text);
 
-                        negocio.agregar(nuevo);
+                        if (!ClienteExiste)
+                        {
+                            nuevo.DNI = (string)txtDNI.Text;
+                            nuevo.Nombre = (string)txtNombre.Text;
+                            nuevo.Apellido = (string)txtApellido.Text;
+                            nuevo.Email = (string)txtEmail.Text;
+                            nuevo.Direccion = (string)txtDireccion.Text;
+                            nuevo.Ciudad = (string)txtCiudad.Text;
+                            nuevo.CP = (string)txtCP.Text;
 
-                        string OKA = "Cliente Ingresado";
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{OKA}');", true);
+                            negocio.agregar(nuevo);
+                        }
 
-                        Response.Redirect("Page1.aspx", false);
+                        Response.Redirect("Participando.aspx", false);
                     }
                     else
                     {
@@ -58,14 +61,11 @@ namespace tp_promoweb_equipo_14A
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{mensaje}');", true);
 
                     }
-
-
                 }
                 else
                 {
                     string mensaje = "Por favor, complete todos los campos.";
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{mensaje}');", true);
-
                 }
 
             }
@@ -85,7 +85,7 @@ namespace tp_promoweb_equipo_14A
             Response.Redirect("Page2.aspx");
         }
 
-        public void Clienteencontrado(string Dni)
+        public bool Clienteencontrado(string Dni)
         {
             AccesoBD datos = new AccesoBD();
             try
@@ -103,6 +103,11 @@ namespace tp_promoweb_equipo_14A
                     txtCiudad.Text = (string)datos.Lector["Ciudad"];
                     txtCP.Text = (string)datos.Lector["CP"].ToString();
 
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
 
             }
@@ -142,7 +147,7 @@ namespace tp_promoweb_equipo_14A
         //        datos.setearParametro("@CodigoVoucher", codigovoucher);
         //        datos.setearParametro("@FechaCanje", fechaActual);
         //        datos.setearParametro("@IdArticulo", IdArticulo);
-                
+
         //        datos.ejecutarAccion();
 
 

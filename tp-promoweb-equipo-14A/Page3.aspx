@@ -16,7 +16,7 @@
         <div class="col-md-2">
             <label for="txtDNI" class="form-label">DNI </label>
             <%--<asp:TextBox runat="server" ID="txtDNI" TextMode="Number" CssClass="form-control" required="" />--%>
-            <asp:TextBox runat="server" ID="txtDNI" CssClass="form-control" MaxLength="10" TextMode="Number" />
+            <asp:TextBox runat="server" ID="txtDNI" CssClass="form-control" MaxLength="10" TextMode="Number" AutoPostBack="true" OnTextChanged="txtDNI_TextChanged" />
         </div>
 
         <div class="col-md-3">

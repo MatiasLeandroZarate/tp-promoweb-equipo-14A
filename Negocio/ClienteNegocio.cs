@@ -10,8 +10,45 @@ namespace Negocio
 {
     public class ClienteNegocio
     {
-        List<Cliente> lista = new List<Cliente>();
+        public List<Cliente> ListarCLI()
+        {
+            List<Cliente> lista = new List<Cliente>();
 
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearStoreProcedure("storeListarCLI");
+
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Cliente aux = new Cliente();
+
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.DNI = (string)datos.Lector["Documento"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Direccion = (string)datos.Lector["Direccion"];
+                    aux.CP = (string)datos.Lector["CP"];
+
+
+                    lista.Add(aux);
+                }
+                datos.cerrarLector();
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public void agregar(Cliente nuevo)
         {
             AccesoBD datos = new AccesoBD();
@@ -37,13 +74,5 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-
-        public void CompararDNI()
-        {
-
-        }
-
-       
-
     }
 }
