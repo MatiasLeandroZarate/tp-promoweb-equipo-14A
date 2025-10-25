@@ -10,8 +10,9 @@ using System.Web.UI.WebControls;
 namespace tp_promoweb_equipo_14A
 {
     public partial class Page11 : System.Web.UI.Page
-    {   public string codigo {  get; set; }
-        public DateTime fechaActual {  get; set; }
+    {
+        public string codigo { get; set; }
+        public DateTime fechaActual { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             codigo = Request.QueryString["CodigoVoucher"] != null ? Request.QueryString["CodigoVoucher"].ToString() : "Ingrese Código.";
@@ -19,44 +20,57 @@ namespace tp_promoweb_equipo_14A
 
         protected void btnSiguiente_Click(object sender, EventArgs e)
         {
-             codigo = txtCodigo.Text.ToUpper();
+
+            codigo = txtCodigo.Text.ToUpper();
             bool codigoExiste = CompararCodigo(codigo);
             if (codigoExiste == true)
             {
-                
 
                 Session.Add("CodigoVoucher", codigo);
-               
-                Response.Redirect("Page2.aspx",false);
-                
+
+                Response.Redirect("Page2.aspx", false);
+
             }
             else
             {
                 string mensaje = "El codigo no existe";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{mensaje}');", true);
-              
+
             }
-           
+
         }
 
 
         public bool CompararCodigo(string codigo)
         {
+            string auxCodigo = codigo.ToUpper();
             AccesoBD acceso = new AccesoBD();
-            try
-            {   
+            Voucher aux = new Voucher();
 
-                acceso.setearQuery("SELECT CodigoVoucher FROM Vouchers WHERE CodigoVoucher = @CodigoVoucher");
+            try
+            {
+
+                acceso.setearQuery("SELECT CodigoVoucher , IdCliente FROM Vouchers WHERE CodigoVoucher = @CodigoVoucher");
                 acceso.setearParametro("@CodigoVoucher", codigo);
                 acceso.ejecutarLectura();
+
                 if (acceso.Lector.Read())
                 {
-                    
-                    return true;
+
+                    aux.CodigoVoucher = (string)acceso.Lector["CodigoVoucher"].ToString().ToUpper();
+                   
+                    if (auxCodigo == aux.CodigoVoucher)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    
+
                     return false;
                 }
             }
@@ -69,5 +83,5 @@ namespace tp_promoweb_equipo_14A
                 acceso.cerrarConexion();
             }
         }
-        }
+    }
 }

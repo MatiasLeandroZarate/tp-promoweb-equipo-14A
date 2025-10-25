@@ -55,7 +55,8 @@
                                         <ItemTemplate>
                                             <div class='<%# (Container.ItemIndex == 0) ? "carousel-item active" : "carousel-item" %>'>
                                                 <div class="img-area">
-                                                    <img src='<%# Container.DataItem %>' class="d-block w-100" alt="Imagen" />
+                                                    <%--<img src='<%# Container.DataItem %>' class="d-block w-100" alt="Imagen" /> --%>
+                                                    <img src='<%# String.IsNullOrEmpty(Convert.ToString(Container.DataItem)) ? "https://efectocolibri.com/wp-content/uploads/2021/01/placeholder.png" : Convert.ToString(Container.DataItem) %>' class="d-block w-100" alt="Imagen" />
                                                 </div>
                                             </div>
                                         </ItemTemplate>

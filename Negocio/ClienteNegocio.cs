@@ -17,8 +17,8 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                datos.setearStoreProcedure("storeListarCLI");
-
+                //datos.setearStoreProcedure("storeListarCLI");
+                datos.setearQuery("SELECT id, Documento, Nombre, Apellido , Email, Direccion , Ciudad , CP  FROM Clientes");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -54,8 +54,9 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
- 
-                datos.setearStoreProcedure("storeAltaCliente");
+
+                //datos.setearStoreProcedure("storeAltaCliente");
+                datos.setearQuery("insert into Clientes values (@Documento,@Nombre,@Apellido,@Email,@Direccion,@Ciudad,@CP)");
                 datos.setearParametro("@Documento",nuevo.DNI);
                 datos.setearParametro("@Nombre ", nuevo.Nombre);
                 datos.setearParametro("@Apellido" ,nuevo.Apellido);

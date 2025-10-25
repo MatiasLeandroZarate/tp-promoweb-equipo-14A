@@ -16,7 +16,7 @@ namespace tp_promoweb_equipo_14A
     public partial class Page3 : System.Web.UI.Page
     {
         string dnicliente;
-        bool Existe = false;
+        //bool Existe = false;
         protected void Page_Load(object sender, EventArgs e)
         {
         }

@@ -19,7 +19,8 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                datos.setearStoreProcedure("storeListarVOU");
+                //datos.setearStoreProcedure("storeListarVOU");
+                datos.setearQuery("select CodigoVoucher,IdCliente, FechaCanje, IdArticulo From Vouchers");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
