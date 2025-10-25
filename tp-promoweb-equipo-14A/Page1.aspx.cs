@@ -43,7 +43,7 @@ namespace tp_promoweb_equipo_14A
 
         public bool CompararCodigo(string codigo)
         {
-            string auxCodigo = codigo.ToUpper();
+            string auxCodigo = codigo.ToUpper(); 
             AccesoBD acceso = new AccesoBD();
             Voucher aux = new Voucher();
 

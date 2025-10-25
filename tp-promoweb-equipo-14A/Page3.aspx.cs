@@ -53,7 +53,8 @@ namespace tp_promoweb_equipo_14A
                             negocio.agregar(nuevo);
                         }
 
-                        Response.Redirect("Participando.aspx", false);
+                        Response.Redirect("Page1.aspx",false);
+                        //Response.Redirect("Participando.aspx", false);
                     }
                     else
                     {
