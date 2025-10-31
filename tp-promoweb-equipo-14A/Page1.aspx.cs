@@ -9,43 +9,61 @@ using System.Web.UI.WebControls;
 
 namespace tp_promoweb_equipo_14A
 {
-    public partial class Page11 : System.Web.UI.Page
+    public partial class Page1 : System.Web.UI.Page
     {
-        public string codigo { get; set; }
+        Voucher codigov = new Voucher();
         public DateTime fechaActual { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            codigo = Request.QueryString["CodigoVoucher"] != null ? Request.QueryString["CodigoVoucher"].ToString() : "Ingrese Código.";
+            //codigov.CodigoVoucher = Request.QueryString["CodigoVoucher"] != null ? Request.QueryString["CodigoVoucher"].ToString() : "Ingrese Código.";
         }
 
         protected void btnSiguiente_Click(object sender, EventArgs e)
         {
-
-            codigo = txtCodigo.Text.ToUpper();
-            bool codigoExiste = CompararCodigo(codigo);
-            if (codigoExiste == true)
+            try
             {
+                if (Validacion.ValidarTxtVacio(txtCodigo))
+                {
+                    Session.Add("Error", "Debe ingresar un código.");
+                    Response.Redirect("Error.aspx");
 
-                Session.Add("CodigoVoucher", codigo);
+                }
 
-                Response.Redirect("Page2.aspx", false);
+                codigov.CodigoVoucher = txtCodigo.Text.ToUpper();
+                if (CompararCodigo(codigov.CodigoVoucher))
+                {
 
+                    Session.Add("CodigoVoucher", codigov.CodigoVoucher);
+
+                    Response.Redirect("Page2.aspx", false);
+
+                }
+                else
+                {
+                    Session.Add("error", "Voucher inválido");
+                    Response.Redirect("Error.aspx", false);
+
+                }
             }
-            else
+            catch (System.Threading.ThreadAbortException ex)
+            { }
+            catch (Exception ex)
             {
-                string mensaje = "El codigo no existe";
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{mensaje}');", true);
+                Session["error"] = ex.ToString(); // o ex.Message si preferís solo el texto
+                Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                Response.Redirect("Error.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
 
+                //Session.Add("error", ex.ToString());
+                //Response.Redirect("Error.aspx");
             }
-
         }
 
 
         public bool CompararCodigo(string codigo)
         {
-            string auxCodigo = codigo.ToUpper(); 
+            string auxCodigo = codigo.ToUpper();
             AccesoBD acceso = new AccesoBD();
-            Voucher aux = new Voucher();
 
             try
             {
@@ -57,9 +75,9 @@ namespace tp_promoweb_equipo_14A
                 if (acceso.Lector.Read())
                 {
 
-                    aux.CodigoVoucher = (string)acceso.Lector["CodigoVoucher"].ToString().ToUpper();
-                   
-                    if (auxCodigo == aux.CodigoVoucher)
+                    codigov.CodigoVoucher = (string)acceso.Lector["CodigoVoucher"].ToString().ToUpper();
+
+                    if (auxCodigo == codigov.CodigoVoucher)
                     {
                         return true;
                     }
@@ -76,7 +94,12 @@ namespace tp_promoweb_equipo_14A
             }
             catch (Exception ex)
             {
-                throw ex;
+                Session["error"] = ex.ToString(); // o ex.Message si preferís solo el texto
+                Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                Response.Redirect("Error.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+
+                throw;
             }
             finally
             {

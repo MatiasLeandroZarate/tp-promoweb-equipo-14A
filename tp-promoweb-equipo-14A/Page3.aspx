@@ -32,7 +32,7 @@
         <div class="col-md-3">
             <label for="txtEmail" class="form-label">Email</label>
             <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                <%--<span class="input-group-text" id="inputGroupPrepend">@</span>--%>
                 <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" />
 
             </div>
@@ -46,17 +46,13 @@
             <label for="txtCiudad" class="form-label">Ciudad</label>
             <asp:TextBox runat="server" CssClass="form-control" ID="txtCiudad" />
 
-            <div class="invalid-feedback">
-                Por favor, ingresar la Ciudad.
-            </div>
+            
         </div>
         <div class="col-md-3">
             <label for="txtCP" class="form-label">CP</label>
             <asp:TextBox runat="server" CssClass="form-control" ID="txtCP" TextMode="Number" />
 
-            <div class="invalid-feedback">
-                Por davor, ingresar el Código Postal
-            </div>
+
         </div>
         <div class="col-12">
             <div class="form-check">
@@ -66,9 +62,7 @@
                 <label class="form-check-label" for="<%= chkTerminos.ClientID %>">
                     Acepto los Términos y Condiciones.
                 </label>
-                <div class="invalid-feedback">
-                    Debes aceptar los Términos y Condiciones.
-                </div>
+
             </div>
         </div>
         <div class="col-12">

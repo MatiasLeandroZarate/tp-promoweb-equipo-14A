@@ -16,6 +16,7 @@ namespace tp_promoweb_equipo_14A
     public partial class Page3 : System.Web.UI.Page
     {
         string dnicliente;
+        
         //bool Existe = false;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,8 +24,11 @@ namespace tp_promoweb_equipo_14A
 
         protected void txtDNI_TextChanged(object sender, EventArgs e)
         {
-            dnicliente = txtDNI.Text;
-            Clienteencontrado(dnicliente);
+            Cliente cliente = new Cliente();
+            cliente.DNI = txtDNI.Text;
+            Clienteencontrado(cliente.DNI);
+            //dnicliente = txtDNI.Text;
+            //Clienteencontrado(dnicliente);
         }
 
         protected void btnEnviar_Click(object sender, EventArgs e)
@@ -34,7 +38,8 @@ namespace tp_promoweb_equipo_14A
             VoucherNegocio voucher = new VoucherNegocio();
             try
             {
-                if (txtDNI.Text != "" && txtNombre.Text != "" && txtApellido.Text != "" && txtEmail.Text != "" && txtDireccion.Text != "" && txtCiudad.Text != "" && txtCP.Text != "")
+                if (!Validacion.ValidarTxtVacio(txtDNI) && !Validacion.ValidarTxtVacio(txtNombre) && !Validacion.ValidarTxtVacio(txtApellido) && !Validacion.ValidarTxtVacio(txtEmail) && !Validacion.ValidarTxtVacio(txtDireccion) && !Validacion.ValidarTxtVacio(txtCiudad) && !Validacion.ValidarTxtVacio(txtCP))
+               // if (txtDNI.Text != "" && txtNombre.Text != "" && txtApellido.Text != "" && txtEmail.Text != "" && txtDireccion.Text != "" && txtCiudad.Text != "" && txtCP.Text != "")
                 {
                     if (chkTerminos.Checked == true)
                     {
@@ -52,37 +57,52 @@ namespace tp_promoweb_equipo_14A
 
                             negocio.agregar(nuevo);
                         }
+                        
+                        //Response.Redirect("Page1.aspx",false);
+                        Response.Redirect("Participando.aspx", false);
+                        Context.ApplicationInstance.CompleteRequest();
 
-                        Response.Redirect("Page1.aspx",false);
-                        //Response.Redirect("Participando.aspx", false);
                     }
                     else
                     {
-                        string mensaje = "Acepte los Terminos y Condiciones.";
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{mensaje}');", true);
-
+                        Session.Add("Error", "Acepte los Terminos y Condiciones.");
+                        Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                        Response.Redirect("Error.aspx", false);
+                        Context.ApplicationInstance.CompleteRequest();
+                       // Response.Redirect("Error.aspx");
+                        
                     }
                 }
                 else
                 {
-                    string mensaje = "Por favor, complete todos los campos.";
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{mensaje}');", true);
+                    Session.Add("Error", "Por favor, complete todos los campos.");
+                    Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                    Response.Redirect("Error.aspx", false);
+                    Context.ApplicationInstance.CompleteRequest();
+                    //Response.Redirect("Error.aspx");
                 }
 
             }
+            catch (System.Threading.ThreadAbortException ex)
+            { }
             catch (Exception ex)
             {
-                Session.Add("error", ex);
-                throw;
+                Session["error"] = ex.ToString(); // o ex.Message si preferís solo el texto
+                Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                Response.Redirect("Error.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+
+
+                //Session.Add("error", ex);
+                //Response.Redirect("Error.aspx");
             }
-            string OK = "Cliente Ingresado";
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{OK}');", true);
+            //string OK = "Cliente Ingresado";
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{OK}');", true);
             //agregarVou();
         }
 
         protected void btnAtras_Click(object sender, EventArgs e)
         {
-
             Response.Redirect("Page2.aspx");
         }
 

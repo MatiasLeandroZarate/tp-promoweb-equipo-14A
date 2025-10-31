@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PageMaster.Master" AutoEventWireup="true" CodeBehind="Page1.aspx.cs" Inherits="tp_promoweb_equipo_14A.Page11" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/PageMaster.Master" AutoEventWireup="true" CodeBehind="Page1.aspx.cs" Inherits="tp_promoweb_equipo_14A.Page1" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -12,7 +12,7 @@
             <div class="mb-3">
                 <label for="txtCodigo" class="form-label">Ingrese el Codigo!!!</label>
 
-                <asp:TextBox  ID="txtCodigo" CssClass="form-control" runat="server" MaxLength="15" />
+                <asp:TextBox   ID="txtCodigo" CssClass="form-control" runat="server" MaxLength="15" />
 
                <hr />
                 <br />

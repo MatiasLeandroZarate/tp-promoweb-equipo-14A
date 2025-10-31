@@ -27,7 +27,7 @@
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         <hr />
-        <footer>MZ- 2025 - Rompete esa Promo! </footer>
+        <footer>Equipo 14A - 2025 - Rompete esa Promo! </footer>
         </div>
         <hr />
     </form>
