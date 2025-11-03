@@ -16,7 +16,6 @@ namespace tp_promoweb_equipo_14A
                 lblError.Text = Server.HtmlEncode(Session["error"].ToString());
             }
 
-            //lblError.Text = Session["error"].ToString();
         }
         protected void btnVolver_Click(object sender, EventArgs e)
         {
@@ -27,11 +26,10 @@ namespace tp_promoweb_equipo_14A
             }
             else
             {
-                // Fallback si no hay página previa
+
                 Response.Redirect("Page1.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
-           // Response.Redirect("Page1.aspx");
         }
     }
 }

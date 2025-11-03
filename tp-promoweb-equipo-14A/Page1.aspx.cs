@@ -14,7 +14,6 @@ namespace tp_promoweb_equipo_14A
         Voucher codigov = new Voucher();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //codigov.CodigoVoucher = Request.QueryString["CodigoVoucher"] != null ? Request.QueryString["CodigoVoucher"].ToString() : "Ingrese Código.";
         }
 
         protected void btnSiguiente_Click(object sender, EventArgs e)
@@ -62,13 +61,11 @@ namespace tp_promoweb_equipo_14A
             { }
             catch (Exception ex)
             {
-                Session["error"] = ex.ToString(); // o ex.Message si preferís solo el texto
-                Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                Session["error"] = ex.ToString(); 
+                Session["prevPage"] = Request.Url.ToString();
                 Response.Redirect("Error.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
 
-                //Session.Add("error", ex.ToString());
-                //Response.Redirect("Error.aspx");
             }
         }
 
@@ -106,8 +103,8 @@ namespace tp_promoweb_equipo_14A
             }
             catch (Exception ex)
             {
-                Session["error"] = ex.ToString(); // o ex.Message si preferís solo el texto
-                Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                Session["error"] = ex.ToString(); 
+                Session["prevPage"] = Request.Url.ToString();
                 Response.Redirect("Error.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
 

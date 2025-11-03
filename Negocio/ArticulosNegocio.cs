@@ -18,7 +18,6 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-               //datos.setearStoreProcedure("storeListarART");
                 datos.setearQuery("SELECT A.Id,A.Codigo,A.Nombre,A.Descripcion,M.Descripcion as Marca ,C.Descripcion as Categoria,Precio , I.ImagenUrl  FROM ARTICULOS A, MARCAS M, CATEGORIAS C , IMAGENES I  where A.IdMarca = M.Id and A.IdCategoria = C.Id and A.Id = I.IdArticulo");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())

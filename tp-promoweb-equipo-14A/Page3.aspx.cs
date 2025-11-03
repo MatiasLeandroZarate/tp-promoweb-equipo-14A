@@ -81,7 +81,7 @@ namespace tp_promoweb_equipo_14A
                     else
                     {
                         Session.Add("Error", "Acepte los Terminos y Condiciones.");
-                        Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                        Session["prevPage"] = Request.Url.ToString(); 
                         Response.Redirect("Error.aspx", false);
                         Context.ApplicationInstance.CompleteRequest();                        
                     }
@@ -89,7 +89,7 @@ namespace tp_promoweb_equipo_14A
                 else
                 {
                     Session.Add("Error", "Por favor, complete todos los campos.");
-                    Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                    Session["prevPage"] = Request.Url.ToString();
                     Response.Redirect("Error.aspx", false);
                     Context.ApplicationInstance.CompleteRequest();
                 }
@@ -98,8 +98,8 @@ namespace tp_promoweb_equipo_14A
             { }
             catch (Exception ex)
             {
-                Session["error"] = ex.ToString(); // o ex.Message si preferís solo el texto
-                Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
+                Session["error"] = ex.ToString();
+                Session["prevPage"] = Request.Url.ToString(); 
                 Response.Redirect("Error.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
             }
