@@ -17,7 +17,6 @@ namespace Negocio
             AccesoBD datos = new AccesoBD();
             try
             {
-                //datos.setearStoreProcedure("storeListarCLI");
                 datos.setearQuery("SELECT id, Documento, Nombre, Apellido , Email, Direccion , Ciudad , CP  FROM Clientes");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
@@ -49,13 +48,13 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        
         public void agregar(Cliente nuevo)
         {
             AccesoBD datos = new AccesoBD();
             try
             {
 
-                //datos.setearStoreProcedure("storeAltaCliente");
                 datos.setearQuery("insert into Clientes values (@Documento,@Nombre,@Apellido,@Email,@Direccion,@Ciudad,@CP)");
                 datos.setearParametro("@Documento",nuevo.DNI);
                 datos.setearParametro("@Nombre ", nuevo.Nombre);
@@ -64,6 +63,34 @@ namespace Negocio
                 datos.setearParametro("@Direccion",nuevo.Direccion);
                 datos.setearParametro("@Ciudad",nuevo.Ciudad);
                 datos.setearParametro("@CP" ,nuevo.CP);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
+        }
+
+        public void modificar(Cliente modificar)
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                datos.setearQuery("UPDATE Clientes SET Documento = @Documento, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Direccion = @Direccion, Ciudad = @Ciudad, CP = @CP WHERE Id = @Id");
+                datos.setearParametro("@Documento", modificar.DNI);
+                datos.setearParametro("@Nombre", modificar.Nombre);
+                datos.setearParametro("@Apellido", modificar.Apellido);
+                datos.setearParametro("@Email", modificar.Email);
+                datos.setearParametro("@Direccion", modificar.Direccion);
+                datos.setearParametro("@Ciudad", modificar.Ciudad);
+                datos.setearParametro("@CP", modificar.CP);
+                datos.setearParametro("@Id", modificar.Id);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

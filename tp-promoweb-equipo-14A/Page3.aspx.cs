@@ -15,62 +15,75 @@ namespace tp_promoweb_equipo_14A
 {
     public partial class Page3 : System.Web.UI.Page
     {
-        string dnicliente;
-        
-        //bool Existe = false;
         protected void Page_Load(object sender, EventArgs e)
         {
         }
 
         protected void txtDNI_TextChanged(object sender, EventArgs e)
         {
-            Cliente cliente = new Cliente();
-            cliente.DNI = txtDNI.Text;
-            Clienteencontrado(cliente.DNI);
-            //dnicliente = txtDNI.Text;
-            //Clienteencontrado(dnicliente);
+            Cliente c = Clienteencontrado(txtDNI.Text);
+
+            if (c != null)
+            {
+                if (string.IsNullOrEmpty(txtNombre.Text)) txtNombre.Text = c.Nombre;
+                if (string.IsNullOrEmpty(txtApellido.Text)) txtApellido.Text = c.Apellido;
+                if (string.IsNullOrEmpty(txtEmail.Text)) txtEmail.Text = c.Email;
+                if (string.IsNullOrEmpty(txtDireccion.Text)) txtDireccion.Text = c.Direccion;
+                if (string.IsNullOrEmpty(txtCiudad.Text)) txtCiudad.Text = c.Ciudad;
+                if (string.IsNullOrEmpty(txtCP.Text)) txtCP.Text = c.CP;
+
+                hfClienteId.Value = c.Id.ToString();
+            }
         }
 
         protected void btnEnviar_Click(object sender, EventArgs e)
         {
             Cliente nuevo = new Cliente();
             ClienteNegocio negocio = new ClienteNegocio();
-            VoucherNegocio voucher = new VoucherNegocio();
+            
             try
             {
                 if (!Validacion.ValidarTxtVacio(txtDNI) && !Validacion.ValidarTxtVacio(txtNombre) && !Validacion.ValidarTxtVacio(txtApellido) && !Validacion.ValidarTxtVacio(txtEmail) && !Validacion.ValidarTxtVacio(txtDireccion) && !Validacion.ValidarTxtVacio(txtCiudad) && !Validacion.ValidarTxtVacio(txtCP))
-               // if (txtDNI.Text != "" && txtNombre.Text != "" && txtApellido.Text != "" && txtEmail.Text != "" && txtDireccion.Text != "" && txtCiudad.Text != "" && txtCP.Text != "")
                 {
                     if (chkTerminos.Checked == true)
                     {
-                        bool ClienteExiste = Clienteencontrado(txtDNI.Text);
+                        Cliente existente = Clienteencontrado(txtDNI.Text);
 
-                        if (!ClienteExiste)
+                        if (existente != null)
                         {
-                            nuevo.DNI = (string)txtDNI.Text;
-                            nuevo.Nombre = (string)txtNombre.Text;
-                            nuevo.Apellido = (string)txtApellido.Text;
-                            nuevo.Email = (string)txtEmail.Text;
-                            nuevo.Direccion = (string)txtDireccion.Text;
-                            nuevo.Ciudad = (string)txtCiudad.Text;
-                            nuevo.CP = (string)txtCP.Text;
+                            existente.DNI = txtDNI.Text;
+                            existente.Nombre = txtNombre.Text;
+                            existente.Apellido = txtApellido.Text;
+                            existente.Email = txtEmail.Text;
+                            existente.Direccion = txtDireccion.Text;
+                            existente.Ciudad = txtCiudad.Text;
+                            existente.CP = txtCP.Text;
+
+                            negocio.modificar(existente);
+                        }
+                        else
+                        {
+                            nuevo.DNI = txtDNI.Text;
+                            nuevo.Nombre = txtNombre.Text;
+                            nuevo.Apellido = txtApellido.Text;
+                            nuevo.Email = txtEmail.Text;
+                            nuevo.Direccion = txtDireccion.Text;
+                            nuevo.Ciudad = txtCiudad.Text;
+                            nuevo.CP = txtCP.Text;
 
                             negocio.agregar(nuevo);
                         }
-                        
-                        //Response.Redirect("Page1.aspx",false);
+                        agregarVou();
+
                         Response.Redirect("Participando.aspx", false);
                         Context.ApplicationInstance.CompleteRequest();
-
                     }
                     else
                     {
                         Session.Add("Error", "Acepte los Terminos y Condiciones.");
                         Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
                         Response.Redirect("Error.aspx", false);
-                        Context.ApplicationInstance.CompleteRequest();
-                       // Response.Redirect("Error.aspx");
-                        
+                        Context.ApplicationInstance.CompleteRequest();                        
                     }
                 }
                 else
@@ -79,9 +92,7 @@ namespace tp_promoweb_equipo_14A
                     Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
                     Response.Redirect("Error.aspx", false);
                     Context.ApplicationInstance.CompleteRequest();
-                    //Response.Redirect("Error.aspx");
                 }
-
             }
             catch (System.Threading.ThreadAbortException ex)
             { }
@@ -91,22 +102,15 @@ namespace tp_promoweb_equipo_14A
                 Session["prevPage"] = Request.Url.ToString(); // guarda la URL actual
                 Response.Redirect("Error.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
-
-
-                //Session.Add("error", ex);
-                //Response.Redirect("Error.aspx");
             }
-            //string OK = "Cliente Ingresado";
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "alerta", $"alert('{OK}');", true);
-            //agregarVou();
         }
 
-        protected void btnAtras_Click(object sender, EventArgs e)
+        protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("Page2.aspx");
         }
 
-        public bool Clienteencontrado(string Dni)
+        public Cliente Clienteencontrado(string Dni)
         {
             AccesoBD datos = new AccesoBD();
             try
@@ -116,21 +120,22 @@ namespace tp_promoweb_equipo_14A
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    txtDNI.Text = (string)datos.Lector["Documento"].ToString();
-                    txtNombre.Text = (string)datos.Lector["Nombre"];
-                    txtApellido.Text = (string)datos.Lector["Apellido"];
-                    txtEmail.Text = (string)datos.Lector["Email"];
-                    txtDireccion.Text = (string)datos.Lector["Direccion"];
-                    txtCiudad.Text = (string)datos.Lector["Ciudad"];
-                    txtCP.Text = (string)datos.Lector["CP"].ToString();
+                    Cliente c = new Cliente();
+                    c.Id = Convert.ToInt32(datos.Lector["Id"]);
+                    c.DNI = datos.Lector["Documento"].ToString();
+                    c.Nombre = datos.Lector["Nombre"].ToString();
+                    c.Apellido = datos.Lector["Apellido"].ToString();
+                    c.Email = datos.Lector["Email"].ToString();
+                    c.Direccion = datos.Lector["Direccion"].ToString();
+                    c.Ciudad = datos.Lector["Ciudad"].ToString();
+                    c.CP = datos.Lector["CP"].ToString();
 
-                    return true;
+                    return c;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
-
             }
             catch (Exception ex)
             {
@@ -140,49 +145,43 @@ namespace tp_promoweb_equipo_14A
             {
                 datos.cerrarConexion();
             }
-
-
         }
-        //public void agregarVou()
-        //{
-        //    AccesoBD datos = new AccesoBD();
-        //    DateTime fechaActual;
-        //    int IdCliente, IdArticulo;
-        //    string dni = (string)txtDNI.Text;
 
-        //        string codigovoucher = Session["CodigoVoucher"].ToString();
-        //        fechaActual = DateTime.Now;
-        //        IdArticulo = (int)Session["IdArticulo"];
-        //            //Falta Corregir la toma de IdARTICULO.
-        //    try
-        //    {
+        public void agregarVou()
+        {
+            AccesoBD datos = new AccesoBD();
+            try
+            {
+                string DNI = txtDNI.Text;
+                string codVoucher = Session["CodigoVoucher"].ToString();
+                int IdArticulo = (int)Session["IdArticulo"];
+                DateTime fechaCanje = DateTime.Now;
 
-        //        datos.setearQuery("SELECT id from Clientes where Documento = @Documento");
-        //        datos.setearParametro("@Documento", dni);
-        //        if (datos.Lector.Read())
-        //        {
-        //            IdCliente = (int)datos.Lector["id"];
-        //        }
+                int IdCliente = 0;
+                datos.setearQuery("SELECT Id FROM Clientes WHERE Documento = @Documento");
+                datos.setearParametro("@Documento", DNI);
+                datos.ejecutarLectura();
 
-        //        datos.setearStoreProcedure("storeAltaVoucher");
-        //        datos.setearParametro("@CodigoVoucher", codigovoucher);
-        //        datos.setearParametro("@FechaCanje", fechaActual);
-        //        datos.setearParametro("@IdArticulo", IdArticulo);
+                if (datos.Lector.Read())
+                {
+                    IdCliente = (int)datos.Lector["Id"];
+                }
+                datos.cerrarConexion();
 
-        //        datos.ejecutarAccion();
+                datos.setearQuery("UPDATE Vouchers SET IdCliente = @IdCliente, FechaCanje = @FechaCanje, IdArticulo = @IdArticulo WHERE CodigoVoucher = @CodigoVoucher");
+                datos.setearParametro("@CodigoVoucher", codVoucher);
+                datos.setearParametro("@FechaCanje", fechaCanje);
+                datos.setearParametro("@IdCliente", IdCliente);
+                datos.setearParametro("@IdArticulo", IdArticulo);
 
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //    finally
-        //    { datos.cerrarConexion(); }
-
-        //}
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            { datos.cerrarConexion(); }
+        }
     }
-
-
 }

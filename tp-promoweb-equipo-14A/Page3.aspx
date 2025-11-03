@@ -7,6 +7,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server" CausesValidation="false">
 
+    <asp:HiddenField ID="hfClienteId" runat="server" />
 
     <h1>COMPLETE LOS DATOS!</h1>
     <%--<asp:Button Text="Atras" ID="Button1" CssClass="btn btn-primary" OnClick="btnAtras_Click" runat="server" CausesValidation="false" />--%>
@@ -66,7 +67,7 @@
             </div>
         </div>
         <div class="col-12">
-
+            <asp:Button Text="Volver" ID="btnVolver" CssClass="btn btn-primary" OnClick="btnVolver_Click" runat="server" />
             <asp:Button Text="Enviar!" CssClass="btn btn-primary" ID="btnEnviar" OnClick="btnEnviar_Click" runat="server" />
         </div>
     </div>

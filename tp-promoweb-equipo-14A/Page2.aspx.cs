@@ -62,7 +62,7 @@ namespace tp_promoweb_equipo_14A
         protected void btnSiguiente_Click(object sender, EventArgs e)
         {
             string valor = ((Button)sender).CommandArgument;
-            //   Session.Add("IdArticulo", valor);
+            Session["IdArticulo"] = Convert.ToInt32(valor);
             Response.Redirect("Page3.aspx");
         }
 

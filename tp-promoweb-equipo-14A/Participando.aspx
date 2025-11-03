@@ -8,6 +8,8 @@
     <h1>FELICIDADES!!</h1>
     <h2>Ya estas participando</h2>
     <br />
+    <asp:Button Text="Volver" ID="btnVolver" CssClass="btn btn-primary" OnClick="btnVolver_Click" runat="server" />
+    <br />
     <p>Serás redirigido en 5 segundos...</p>
 
 </asp:Content>
